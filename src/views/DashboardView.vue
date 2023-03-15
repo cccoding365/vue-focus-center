@@ -1,8 +1,9 @@
 <script setup>
+import Space from '@/components/Space'
 </script>
 
 <template>
-  <main>
-    数据统计
-  </main>
+  <Space :hasPadding="true">
+    <h3>数据统计</h3>
+  </Space>
 </template>

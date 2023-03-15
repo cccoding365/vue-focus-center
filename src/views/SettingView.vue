@@ -1,8 +1,9 @@
 <script setup>
+import Space from '@/components/Space'
 </script>
 
 <template>
-  <main>
-    设置
-  </main>
+  <Space :hasPadding="true">
+    <h3>设置</h3>
+  </Space>
 </template>

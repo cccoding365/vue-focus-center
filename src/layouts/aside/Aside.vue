@@ -59,16 +59,20 @@ import { routers } from '@/config'
 
     .nav-item {
       display: flex;
-      // justify-content: center;
+      color: var(--menu-item-color);
       align-items: center;
       width: 70%;
       margin: 5px 0;
-      padding: 10px;
+      padding: 5px 20px;
       border-radius: var(--nav-border-radius);
 
       &:hover {
         background-color: var(--nav-hover-background-color);
       }
+    }
+
+    .router-link-active {
+      background-color: var(--theme-color-light);
     }
   }
 }

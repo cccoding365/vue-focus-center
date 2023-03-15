@@ -4,10 +4,12 @@
   --nav-hover-background-color: #f1f2f6;
 
   --theme-color: #3b82f6;
-  --theme-color-dark: #1d5bbe;
+  --theme-color-light: #eff6ff;
+  --theme-color-dark: #70a2f1;
 
   --title-text-color: rgba(15, 23, 42, 0.85);
   --item-hover-background-color: #f1f2f6a5;
+  --menu-item-color: rgba(15, 23, 42, .7);
 
   --menu-width: 240px;
   --logo-width: 50px;

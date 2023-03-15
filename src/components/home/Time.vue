@@ -1,9 +1,6 @@
 <template>
-  <Space>
-    {{ new Date() }}
-  </Space>
+  {{ new Date() }}
 </template>
 
 <script setup>
-import Space from '../Space.vue'
 </script>

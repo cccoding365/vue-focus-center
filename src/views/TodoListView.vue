@@ -1,7 +1,7 @@
 <script setup>
 import { ref, reactive } from 'vue'
 import Space from '../components/Space'
-import TodoContentDialog from '../components/todolist/TodoContentDialog'
+import TodoDialog from '../components/todo/TodoDialog'
 
 import { storeToRefs } from 'pinia'
 import { useTodoStore } from '@/stores/todo'
@@ -29,10 +29,10 @@ const { openTodoDialog, closeTodoDialog, editTodo, removeTodo } = todoStore
     <main>
       <Space v-if="todoList.length">
         <ul>
-          <li class="todo-item" v-for="(todo, index) of todoList">
+          <li class="todo-item" :class="{ checked: todo.status }"  v-for="(todo, index) of todoList">
             <input type="checkbox" :checked="todo.status" v-model="todo.status">
             <span>{{ todo.content }}</span>
-            <div class="btn-box">
+            <div class="btn-box" v-if="!todo.status">
               <button @click="openTodoDialog(todo.id)">编辑</button>
               <button @click="removeTodo(index)">删除</button>
             </div>
@@ -48,7 +48,7 @@ const { openTodoDialog, closeTodoDialog, editTodo, removeTodo } = todoStore
       </Space>
     </main>
   </div>
-  <TodoContentDialog />
+  <TodoDialog />
 </template>
 
 <style lang="less" scoped>
@@ -116,7 +116,13 @@ main {
     cursor: pointer;
 
     input {
+      width: 25px;
+      height: 25px;
       margin-right: 10px;
+    }
+
+    &.checked {
+      opacity: .5;
     }
 
     .btn-box {

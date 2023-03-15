@@ -4,7 +4,7 @@
   </transition>
   <div class="todo-content-dialog" :class="{ hidden: !dialogVisibility }">
     <header>
-      <h3> {{ dialogTitle }} </h3>
+      <h3> {{ title }} </h3>
       <div class="button-box">
         <button class="cancel" @click="closeTodoDialog">取消</button>
         <button class="submit" @click="submitTodoHandle">确定</button>
@@ -15,14 +15,15 @@
 </template>
 
 <script setup>
-import { reactive } from 'vue'
+import { reactive, computed } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useTodoStore } from '@/stores/todo'
 
 const todoStore = useTodoStore()
-const { dialogTitle, dialogType, dialogVisibility, currentTodo } = storeToRefs(todoStore)
+const { dialogType, dialogVisibility, currentTodo } = storeToRefs(todoStore)
 const { openTodoDialog, closeTodoDialog, submitTodoHandle } = todoStore
 
+const title = computed(() => dialogType.value == 'add' ? '新建待办' : '修改待办')
 </script>
 
 <style lang="less" scoped>
@@ -124,4 +125,5 @@ const { openTodoDialog, closeTodoDialog, submitTodoHandle } = todoStore
   }
 
   .textarea::placeholder {}
-}</style>
+}
+</style>

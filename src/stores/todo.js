@@ -20,13 +20,16 @@ export const useTodoStore = defineStore('todo', {
       this.dialogTitle = ''
       this.dialogType = ''
     },
+    // 打开 Dialog 
     openTodoDialog(id) {
       if (id) {
+        console.log('修改');
         const todoItem = this.todoList.find(item => item.id === id)
         this.currentTodo = todoItem
         this.dialogTitle = '修改待办'
         this.dialogType = 'edit'
       } else {
+        console.log('新建')
         this.currentTodo = {}
         this.dialogTitle = '新建待办'
         this.dialogType = 'add'
