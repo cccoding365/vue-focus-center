@@ -14,6 +14,14 @@ export const useTodoStore = defineStore('todo', {
       ]
     }
   },
+  getters: {
+    completeTodoList: (state) => {
+      return state.todoList.filter(item => item.status)
+    },
+    unCompleteTodoList: (state) => {
+      return state.todoList.filter(item => !item.status)
+    }
+  },
   actions: {
     resetDialogState() {
       this.dialogVisibility = false
@@ -23,7 +31,7 @@ export const useTodoStore = defineStore('todo', {
     // 打开 Dialog 
     openTodoDialog(id) {
       if (id) {
-        console.log('修改');
+        console.log('修改')
         const todoItem = this.todoList.find(item => item.id === id)
         this.currentTodo = todoItem
         this.dialogTitle = '修改待办'

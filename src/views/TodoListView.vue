@@ -7,8 +7,13 @@ import { storeToRefs } from 'pinia'
 import { useTodoStore } from '@/stores/todo'
 
 const todoStore = useTodoStore()
-const { title, visibility, todoList } = storeToRefs(todoStore)
+const { title, visibility, todoList, completeTodoList } = storeToRefs(todoStore)
 const { openTodoDialog, closeTodoDialog, editTodo, removeTodo } = todoStore
+
+let showTodoListType = ref('all')
+
+const showTodoList = showTodoListType.value == 'all' ? todoList : []
+
 
 </script>
 
@@ -18,7 +23,7 @@ const { openTodoDialog, closeTodoDialog, editTodo, removeTodo } = todoStore
       <h2>我的待办</h2>
       <div class="button-box">
         <button class="back-today">
-          <svg-icon icon-class="icon-repeat"></svg-icon>
+          <!-- <svg-icon icon-class="icon-repeat"></svg-icon> -->
           回到今天
         </button>
         <button class="add-todo" @click="openTodoDialog()">
@@ -27,9 +32,9 @@ const { openTodoDialog, closeTodoDialog, editTodo, removeTodo } = todoStore
       </div>
     </header>
     <main>
-      <Space v-if="todoList.length">
+      <Space class="todolist-container" v-if="todoList.length">
         <ul>
-          <li class="todo-item" :class="{ checked: todo.status }"  v-for="(todo, index) of todoList">
+          <li class="todo-item" :class="{ checked: todo.status }" v-for="(todo, index) of showTodoList">
             <input type="checkbox" :checked="todo.status" v-model="todo.status">
             <span>{{ todo.content }}</span>
             <div class="btn-box" v-if="!todo.status">
@@ -38,6 +43,11 @@ const { openTodoDialog, closeTodoDialog, editTodo, removeTodo } = todoStore
             </div>
           </li>
         </ul>
+        <footer>
+          <span @click="showTodoListType.value = 'all'">全部</span>
+          <span @click="showTodoListType.value = 'unCompleted'">进行中</span>
+          <span @click="showTodoListType.value = 'completed'">已完成</span>
+        </footer>
       </Space>
       <Space v-else>
         <div class="todo-list-empty">
@@ -106,6 +116,17 @@ header {
 }
 
 main {
+  .todolist-container {
+    footer {
+      border-top: 1px solid #00000010;
+      padding: 20px 30px;
+
+      span {
+        margin-right: 20px;
+      }
+    }
+  }
+
   .todo-item {
     position: relative;
     display: flex;
