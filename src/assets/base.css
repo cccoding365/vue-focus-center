@@ -1,0 +1,21 @@
+:root {
+  --body-background-color: #f1f2f6;
+  --block-background-color-white: #fff;
+  --nav-hover-background-color: #f1f2f6;
+
+  --theme-color: #3b82f6;
+  --theme-color-dark: #1d5bbe;
+
+  --title-text-color: rgba(15, 23, 42, 0.85);
+  --item-hover-background-color: #f1f2f6a5;
+
+  --menu-width: 240px;
+  --logo-width: 50px;
+  --logo-height: 50px;
+
+  --header-height: 60px;
+
+  --nav-border-radius: 5px;
+
+
+}
