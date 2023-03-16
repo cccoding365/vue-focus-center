@@ -27,6 +27,7 @@ export const useTodoStore = defineStore('todo', {
       this.dialogVisibility = false
       this.dialogTitle = ''
       this.dialogType = ''
+      this.currentTodo = {}
     },
     // 打开 Dialog 
     openTodoDialog(id) {
@@ -68,6 +69,10 @@ export const useTodoStore = defineStore('todo', {
     removeTodo(index) {
       console.log(index)
       this.todoList.splice(index, 1)
+    },
+    delAllCompleted() {
+      console.log('清除全部已完成');
+      this.todoList = this.todoList.filter((item) => !item.status)
     },
 
     completeTodo(id) {

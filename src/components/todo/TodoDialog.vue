@@ -10,12 +10,12 @@
         <button class="submit" @click="submitTodoHandle">确定</button>
       </div>
     </header>
-    <textarea class="textarea" v-model="currentTodo.content" placeholder="你想做点什么呢？"></textarea>
+    <textarea class="textarea" v-model="currentTodo.content" @keyup.enter="submitTodoHandle" placeholder="你想做点什么呢？"></textarea>
   </div>
 </template>
 
 <script setup>
-import { reactive, computed } from 'vue'
+import { reactive, computed, onMounted } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useTodoStore } from '@/stores/todo'
 
@@ -24,6 +24,11 @@ const { dialogType, dialogVisibility, currentTodo } = storeToRefs(todoStore)
 const { openTodoDialog, closeTodoDialog, submitTodoHandle } = todoStore
 
 const title = computed(() => dialogType.value == 'add' ? '新建待办' : '修改待办')
+
+const todoDialog = reactive({
+  content: ''
+})
+
 </script>
 
 <style lang="less" scoped>

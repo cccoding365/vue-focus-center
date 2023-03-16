@@ -1,18 +1,27 @@
 <script setup>
-import { ref, reactive } from 'vue'
-import Space from '../components/Space'
-import TodoDialog from '../components/todo/TodoDialog'
+import { ref, reactive, computed } from 'vue'
+import Space from '@/components/Space'
+import TodoDialog from '@/components/todo/TodoDialog'
 
 import { storeToRefs } from 'pinia'
 import { useTodoStore } from '@/stores/todo'
 
 const todoStore = useTodoStore()
 const { title, visibility, todoList, completeTodoList } = storeToRefs(todoStore)
-const { openTodoDialog, closeTodoDialog, editTodo, removeTodo } = todoStore
+const { openTodoDialog, closeTodoDialog, editTodo, removeTodo, delAllCompleted } = todoStore
 
 let showTodoListType = ref('all')
 
-const showTodoList = showTodoListType.value == 'all' ? todoList : []
+const showTodoList = computed(() => {
+  return showTodoListType.value == 'completed' ? todoList.value.filter(i => i.status)
+    : showTodoListType.value == 'unCompleted' ? todoList.value.filter(i => !i.status)
+      : todoList.value
+})
+
+const unCompletedNum = computed(() => {
+  return todoList.value.filter((item) => !item.status).length
+})
+
 
 
 </script>
@@ -34,6 +43,7 @@ const showTodoList = showTodoListType.value == 'all' ? todoList : []
     <main>
       <Space class="todolist-container" v-if="todoList.length">
         <ul>
+          <li class="todo-item" v-if="!showTodoList.length">该情况下无待办</li>
           <li class="todo-item" :class="{ checked: todo.status }" v-for="(todo, index) of showTodoList">
             <input type="checkbox" :checked="todo.status" v-model="todo.status">
             <span>{{ todo.content }}</span>
@@ -44,9 +54,14 @@ const showTodoList = showTodoListType.value == 'all' ? todoList : []
           </li>
         </ul>
         <footer>
-          <span @click="showTodoListType.value = 'all'">全部</span>
-          <span @click="showTodoListType.value = 'unCompleted'">进行中</span>
-          <span @click="showTodoListType.value = 'completed'">已完成</span>
+
+          <span :class="{ selected: showTodoListType == 'all' }" @click="showTodoListType = 'all'">全部</span>
+          <span :class="{ selected: showTodoListType == 'completed' }" @click="showTodoListType = 'completed'">已完成</span>
+          <span :class="{ selected: showTodoListType == 'unCompleted' }"
+            @click="showTodoListType = 'unCompleted'">未完成</span>
+
+          <span class="clearAllCompeleted" v-show="todoList.length > unCompletedNum" @click="delAllCompleted"> 清除已完成
+          </span>
         </footer>
       </Space>
       <Space v-else>
@@ -120,9 +135,29 @@ main {
     footer {
       border-top: 1px solid #00000010;
       padding: 20px 30px;
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
 
       span {
-        margin-right: 20px;
+        padding: 5px 10px;
+        cursor: pointer;
+
+        &.selected {
+          color: var(--theme-color);
+        }
+      }
+
+      .clearAllCompeleted {
+        padding: 5px 30px;
+        border-radius: 5px;
+        margin-left: auto;
+        cursor: pointer;
+
+        &:hover {
+          color: aliceblue;
+          background-color: red;
+        }
       }
     }
   }
@@ -139,7 +174,7 @@ main {
     input {
       width: 25px;
       height: 25px;
-      margin-right: 10px;
+      margin-right: 20px;
     }
 
     &.checked {
