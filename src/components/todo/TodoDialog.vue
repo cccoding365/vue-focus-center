@@ -10,7 +10,7 @@
         <button class="submit" @click="submitTodoHandle">确定</button>
       </div>
     </header>
-    <textarea class="textarea" v-model="currentTodo.content" @keyup.enter="submitTodoHandle" placeholder="你想做点什么呢？"></textarea>
+    <input class="textarea" v-model="currentTodo.content" @keyup.enter="submitTodoHandle" placeholder="你想做点什么呢？"/>
   </div>
 </template>
 

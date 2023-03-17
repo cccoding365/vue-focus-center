@@ -7,11 +7,7 @@ export const useTodoStore = defineStore('todo', {
       dialogTitle: '',
       dialogType: '',
       currentTodo: {},
-      todoList: [
-        { id: 1, content: '吃饭', status: false },
-        { id: 2, content: '睡觉', status: true },
-        { id: 3, content: '打豆豆', status: false },
-      ]
+      todoList: []
     }
   },
   getters: {
@@ -71,7 +67,7 @@ export const useTodoStore = defineStore('todo', {
       this.todoList.splice(index, 1)
     },
     delAllCompleted() {
-      console.log('清除全部已完成');
+      console.log('清除全部已完成')
       this.todoList = this.todoList.filter((item) => !item.status)
     },
 
@@ -83,5 +79,8 @@ export const useTodoStore = defineStore('todo', {
       const todoItem = this.todoList.find(item => item.id === id)
       todoItem.status = false
     },
-  }
+  },
+  persist: {
+    storage: localStorage,
+  },
 })
